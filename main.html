@@ -9,12 +9,18 @@
     <title>INDEED++</title>
     <!-- Bootsdivap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="customize.css" rel="stylesheet">
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
 </head>
 
 <body>
@@ -47,8 +53,8 @@
         <!-- /.container-fluid -->
     </nav>
     <div class="panel panel-default col-md-8 col-md-offset-2">
-        <div class="panel-body">
-            <form class="form-inline center">
+        <div class="panel-body ">
+            <div class="form-inline center">
                 <div class="form-group">
                     <label class="sr-only" for="searchKeywords">Search Keywords</label>
                     <input type="text" class="form-control" id="searchKeywords" placeholder="Job Title, Keywords or Company">
@@ -69,69 +75,54 @@
                         </ul>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-default" id="search">SEARCH</button>
-            </form>
+                <button type="submit" class="btn btn-default" id="search">Search</button>
+            </div>
         </div>
     </div>
-    <div class="col-md-8 col-md-offset-2">
-        
-            <div class="job-post">
-                <h4><a href="#">Internship in IT</a></h4>
-                <h5 class="text-muted"><span class="location">Los Angeles, CA</span></h5>
-                <div>
-                    <p>
-                        Your internship may be at Sony or Kaiser Permanente, among many other leading organizations in the Los Angeles area....
-                    </p>
-                    <p>10 days ago - <a href="#">more</a></p>
-                </div>
-            </div>
-            <div class="job-post"  style="margin-bottom:10px;">
-                <h4><a href="#">Business Analyst Intern</a></h4>
-                <h5 class="text-muted"><span class="location"> Milwaukee, WI</span></h5>
-                <div>
-                    <p>
-                        Must be at a junior or senior standing at the start of the internship and a 3.0 or higher grade point average is preferred....
-                    </p>
-                    <p>15 days ago - <a href="#">more</a></p>
-                </div>
-            </div>
-            <div class="job-post">
-                <h4><a href="#">Full Time Internship in Business</a></h4>
-                <h5 class="text-muted"><span class="location">Dallas-Fort Worth, TX</span></h5>
-                <div>
-                    <p>
-                        The program consists of classes in technical and professional skills, followed by a 6-month internship with a top company....
-                    </p>
-                    <p>30+ days ago - <a href="#">more</a></p>
-                </div>
-            </div>
-       
-    </div>
-    
-    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
-	<script>
-	  // Initialize Firebase
-	  var config = {
-	    apiKey: "AIzaSyDLFK8TCZ14wnZhRNhfyFswMda21yIowf0",
-	    authDomain: "inf551-db90c.firebaseapp.com",
-	    databaseURL: "https://inf551-db90c.firebaseio.com",
-	    projectId: "inf551-db90c",
-	    storageBucket: "inf551-db90c.appspot.com",
-	    messagingSenderId: "562245129922"
-	  };
-	  firebase.initializeApp(config);
-	</script>
+    <div class="col-md-8 col-md-offset-2 " id="job-post-panel">
 
-    
+        <!-- <div class="job-post-card card-1" >
+            <h4><a href="#">Internship in IT</a></h4>
+            <h5 class="text-muted">
+              <span class="company" style="color:gray;"><a href="#">Google</a></span>
+              <span class="location" style="margin-left:5px;"> - Los Angeles, CA</span>
+            </h5>
+            <div class="job-snip">
+                Your internship may be at Sony or Kaiser Permanente, among many other leading organizations in the Los Angeles area....
+            </div>
+            <div class="job-date" style="color:gray;">
+                14 days ago
+            </div>
+        </div> -->
+
+        <!--  end of job posting panel -->
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDLFK8TCZ14wnZhRNhfyFswMda21yIowf0",
+            authDomain: "inf551-db90c.firebaseapp.com",
+            databaseURL: "https://inf551-db90c.firebaseio.com",
+            projectId: "inf551-db90c",
+            storageBucket: "inf551-db90c.appspot.com",
+            messagingSenderId: "562245129922"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="main.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <style type="text/css">
-    div.job-post {
-        padding-bottom: 5px;
-    	margin-bottom:10px;
-    }
+        div.job-post {
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
     </style>
 </body>
 
