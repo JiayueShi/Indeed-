@@ -1,7 +1,5 @@
 window.onload = function() {
     initApp();
-
-    console.log('your sister')
 };
 
 function a1() {
@@ -42,39 +40,74 @@ function a2() {
 
 function initApp() {
 
-    // var user = firebase.auth().currentUser;
-    //        console.log('your sister outside of if user');
-
+    var user = firebase.auth().currentUser;
     firebase.auth().onAuthStateChanged(function(user) {
+
+    if (user){
         var email = user.email;
         var uid = user.uid;
 
         document.getElementById('left2').innerHTML = (email);
         document.getElementById('left1').innerHTML = ("Log Out");
-        console.log('your sister')
+      	
         // User is signed in.
         var uid = user.uid;
         var database = firebase.database();
 
         var ref = firebase.database().ref('search' + uid);
-
-        var query = ref.orderByKey();
-        ref.once("value")
+        var keywords = [];
+        var places = [];
+        
+        ref.child("keyword").once("value")
             .then(function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
-                    // key will be "ada" the first time and "alan" the second time
+                    
                     var key = childSnapshot.key;
                     // childData will be the actual contents of the child
-                    // var childData = childSnapshot.val();
-                    alert(key);
-                    console.log(key);
+                    var childData = childSnapshot.val()['searchKeywords'];
+                    // console.log(key);
+                    keywords.push(childData);
                     // console.log(childData);
+
 
                 });
             });
+
+        ref.child("place").once("value")
+            .then(function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    
+                    var key = childSnapshot.key;
+                    // childData will be the actual contents of the child
+                    var childData = childSnapshot.val()['place'];
+                    // console.log(key);
+                    places.push(childData);
+                    // console.log(childData);
+
+
+                });
+            });
+
+        kLength = keywords.length;
+        pLength = places.length;
+
+
+        console.log(keywords[0]);
+        console.log(places);
+
+        
+        var three = 3;
+
+        for(var i = kLength - 1; i > kLength - 4; i --){
+
+        	document.getElementById('k'+three).innerHTML = (keywords[i]);
+        	three--;
+        }
+
         } else {
             // No user is signed in.
             console.log('log out');
 
         }
+    })
     };

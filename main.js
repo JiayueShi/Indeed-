@@ -65,6 +65,94 @@ function a2() {
 
 
 
+function parseSkills(skillData, jobCount) {
+    var totalCount = 0;
+    var othersCount = 0;
+    var topTenList = [];
+    var count = 0;
+    // var jobCount = Object.keys(skillData).length;
+    console.log('jobCount:' + jobCount);
+
+    // sort skill data
+    skillData.sort(function(a, b) {
+        return parseFloat(b.count) - parseFloat(a.count);
+    });
+    console.log(skillData);
+
+    for (key in skillData) {
+        // totalCount += skill[]
+        curSkill = skillData[key]
+        console.log(curSkill);
+        curCount = curSkill.count;
+        totalCount += curCount;
+        topTenList.push({
+            "name": curSkill.name,
+            'y': curCount * 100.0 / jobCount,
+            'drilldown': curSkill.name
+        });
+        count += 1;
+        if (count == 10) {
+            break;
+        }
+    }
+
+    return topTenList;
+};
+
+
+function initSkillChart(skills, jobCount) {
+    var parsedSkills = parseSkills(skills, jobCount);
+    // console.log(parsedSkills);
+
+    // Create the chart
+    Highcharts.chart('skill-chart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Most desired skills for Data Scientists in Los Angeles, California'
+        },
+        subtitle: {
+            text: 'Source: <a href="https://www.indeed.com/">Indeed.com</a>, scraped by Ji</a>.'
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: 'Total percent for skill per Jobs'
+            }
+
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.1f}%'
+                }
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total skill required<br/>'
+        },
+
+        series: [{
+            name: 'Skills/Programming Language',
+            colorByPoint: true,
+            data: parsedSkills
+        }]
+    });
+
+}
+
+
+
 function clickSearch() {
 
     var searchKeywords = document.getElementById('searchKeywords').value;
@@ -105,16 +193,18 @@ function clickSearch() {
 
                 addPosts(post);
             });
-
             console.log(jobPosts);
             console.log(skills);
+
+            // init the skill chart
+            initSkillChart(skills, jobPosts.length);
+
         },
         fail: function() {
             console.log('failed');
         },
     });
     //  end of api call
-
     var user = firebase.auth().currentUser;
 
     if (user) {
