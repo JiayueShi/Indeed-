@@ -120,10 +120,23 @@ function clickSearch() {
     if (user) {
         // User is signed in.
         var uid = user.uid;
-        firebase.database().ref('search' + uid).push({
-            searchKeywords: searchKeywords,
+        var ref = firebase.database().ref('search' + uid);
+        if (searchKeywords !== null && searchKeywords !== ""){
+            ref.child("keyword").push({
+                searchKeywords: searchKeywords
+            });
+        }
+        if (place !== null || place !== ""){
+           place = "CA"
+            
+        }
+        ref.child("place").push({
             place: place
         });
+        // firebase.database().ref('search' + uid).push({
+        //     searchKeywords: searchKeywords,
+        //     place: place
+        // });
 
     } else {
         // No user is signed in.
