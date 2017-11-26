@@ -272,8 +272,15 @@ function clickSearch() {
     // } else {
     var searchKeywords = document.getElementById('searchKeywords').value;
     var place = document.getElementById('place').value;
-     var user = firebase.auth().currentUser;
+    var user = firebase.auth().currentUser;
 
+    if(searchKeywords=="" || searchKeywords == null){
+        searchKeywords = "Most popular jobs";
+    }
+
+    if(place=="" || place == null){
+        place = "Most popular places";
+    }
     if (user) {
         // User is signed in.
         var uid = user.uid;
