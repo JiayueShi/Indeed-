@@ -72,10 +72,13 @@ function initApp() {
                 });
                 var three = 3;
                 kLength = keywords.length;
+                var j = 1;
+
                 for(var i = kLength - 1; i > kLength - 4; i --){
 
-                    document.getElementById('k'+three).innerHTML = (keywords[i]);
+                    document.getElementById('k'+j).innerHTML = (keywords[i]);
                     three--;
+                    j++;
                 }
             }
             );
@@ -96,10 +99,12 @@ function initApp() {
                 console.log(places[0]);
                 var three = 3;
                 pLength = places.length;
+                var j = 1
                 for(var i = pLength - 1; i > pLength - 4; i --){
 
-                    document.getElementById('p'+three).innerHTML = (places[i]);
+                    document.getElementById('p'+j).innerHTML = (places[i]);
                     three--;
+                    j++;
                 }
 
             }

@@ -285,8 +285,22 @@ function clickSearch() {
     // } else {
     var searchKeywords = document.getElementById('searchKeywords').value;
     var place = document.getElementById('place').value;
+     var user = firebase.auth().currentUser;
 
-    jobSearch(searchKeywords, location);
+    if (user) {
+        // User is signed in.
+        var uid = user.uid;
+        firebase.database().ref('search' + uid).child("keyword").push({
+            searchKeywords: searchKeywords
+        });
+        firebase.database().ref('search' + uid).child("place").push({        
+            place: place
+        });
+    } else {
+        // No user is signed in.
+    }
+
+    jobSearch(searchKeywords, place);
 
 
 };
