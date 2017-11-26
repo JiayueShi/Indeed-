@@ -1,22 +1,191 @@
-
-.body{
-  font-family: 'Open Sans', sans-serif !important;
+body {
+    /*font-family: 'Open Sans', sans-serif !important;*/
+    font-family: 'Roboto Slab', serif !important;
+    font-weight: 300;
 }
 
-.job-post-card{
-  font-weight: 300 !important;
+.job-post-card {
+    background-color: rgb(253, 253, 253);
+    /*background-color: rgb(255,255,255);*/
+    font-family: 'Roboto Slab', serif !important;
+    font-weight: 300 !important;
 }
 
-.job-title{
-  font-weight:700 !important;
+.job-title {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 700 !important;
+}
+
+.card {
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+#cat_img {
+    /*width: 100%;*/
+    max-width: 400px;
+    position: fixed;
+    z-index: 1000;
+    bottom: -500px;
+    right: 10px;
+    -webkit-transform: rotate(-15deg);
+    -moz-transform: rotate(-15deg);
+    -ms-transform: rotate(-15deg);
+    -o-transform: rotate(-15deg);
+    transform: rotate(-15deg);
+    -webkit-box-shadow: 2px 1px 6px 1px #555;
+    box-shadow: 2px 1px 6px 1px #555;
+}
+
+#wild_img {
+  /*width: 100%;*/
+  max-width: 400px;
+  position: fixed;
+  z-index: 1000;
+  top: -400px;
+  right: -400px;
+  -webkit-transform: rotate(-15deg);
+  -moz-transform: rotate(-15deg);
+  -ms-transform: rotate(-15deg);
+  -o-transform: rotate(-15deg);
+  transform: rotate(-15deg);
+  -webkit-box-shadow: 2px 1px 6px 1px #555;
+  box-shadow: 2px 1px 6px 1px #555;
+  /*rotate*/
 }
 
 .card-1 {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  transition: all 0.2s ease-in-out;
-  padding: 10px;
+    /*box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);*/
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    padding: 10px;
+    overflow: hidden;
+    -webkit-transition: box-shadow 0.218s;
+    -moz-transition: box-shadow 0.218s;
+    -o-transition: box-shadow 0.218s;
+    transition: box-shadow 0.218s;
+    transition-property: box-shadow;
+    transition-duration: 0.218s;
+    transition-timing-function: initial;
+    transition-delay: initial;
 }
+
 .card-1:hover {
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.12), 0 3px 5px rgba(0, 0, 0, 0.24);
-  opacity: .85;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.32), 0 3px 5px rgba(0, 0, 0, 0.24);
+    opacity: .85;
+}
+
+
+/* SWITCH */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 23px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+}
+
+
+/* Rounded sliders */
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+
+/* END OF SWITCH */
+
+
+/* Toast css */
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+    opacity: 0.8;
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+
+/* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
 }

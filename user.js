@@ -25,9 +25,8 @@ function a2() {
         // User is signed in.
         firebase.auth().signOut();
         alert("You have log out!");
-        document.getElementById('left2').innerHTML = ("Sign In");
-        document.getElementById('left1').innerHTML = ("Sign Up");
-
+        
+        window.location.href="main.html";
         // document.getElementById("left1").href="index.html";
 
     } else {
@@ -71,7 +70,15 @@ function initApp() {
 
 
                 });
-            });
+                var three = 3;
+                kLength = keywords.length;
+                for(var i = kLength - 1; i > kLength - 4; i --){
+
+                    document.getElementById('k'+three).innerHTML = (keywords[i]);
+                    three--;
+                }
+            }
+            );
 
         ref.child("place").once("value")
             .then(function(snapshot) {
@@ -86,27 +93,34 @@ function initApp() {
 
 
                 });
-            });
+                console.log(places[0]);
+                var three = 3;
+                pLength = places.length;
+                for(var i = pLength - 1; i > pLength - 4; i --){
 
-        kLength = keywords.length;
-        pLength = places.length;
+                    document.getElementById('p'+three).innerHTML = (places[i]);
+                    three--;
+                }
 
+            }
+            
+            );
 
-        console.log(keywords[0]);
-        console.log(places);
 
         
-        var three = 3;
+        
 
-        for(var i = kLength - 1; i > kLength - 4; i --){
 
-        	document.getElementById('k'+three).innerHTML = (keywords[i]);
-        	three--;
-        }
+        // console.log(keywords[0]);
+        // console.log(places);
+
+        
+       
 
         } else {
             // No user is signed in.
             console.log('log out');
+            window.location.href="main.html";
 
         }
     })

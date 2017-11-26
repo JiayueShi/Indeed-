@@ -20,11 +20,14 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+
 
 </head>
 
-<body>
-    <nav class="navbar navbar-default">
+<body style="font-family: 'Roboto Slab', serif ;">
+    <nav class="navbar navbar-default card">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -34,11 +37,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">INDEED++</a>
+                <a class="navbar-brand" href="main.html" style="font-family: 'Poiret One', cursive; color:#2196F3; "><b>Indeed++</b></a>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Jobs <span class="sr-only">(current)</span></a></li>
+                   <!-- <li class="active"><a href="#">Jobs <span class="sr-only">(current)</span></a></li>
                     <li><a href="#">Company Reviews</a></li>
-                    <li><a href="#">Find Salaries</a></li>
+                    <li><a href="#">Find Salaries</a></li> -->
                 </ul>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -52,9 +55,9 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-    <div class="panel panel-default col-md-8 col-md-offset-2">
-        <div class="panel-body ">
-            <div class="form-inline center">
+    <div class="panel panel-default col-md-8 col-md-offset-2 card" style="background-color:#f5f5f5;">
+        <div class="panel-body center">
+            <div class="form-inline center col-md-offset-2">
                 <div class="form-group">
                     <label class="sr-only" for="searchKeywords">Search Keywords</label>
                     <input type="text" class="form-control" id="searchKeywords" placeholder="Job Title, Keywords or Company">
@@ -63,7 +66,7 @@
                     <label class="sr-only" for="place">Work Place</label>
                     <input type="text" class="form-control" id="place" placeholder="Los Angeles, CA">
                 </div>
-                <div class="form-group">
+            <!--    <div class="form-group">
                     <div class="dropdown">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="divue" aria-expanded="divue">
                             Jobs
@@ -74,13 +77,26 @@
                             <li><a href="#">Companies</a></li>
                         </ul>
                     </div>
-                </div>
+                </div>-->
                 <button type="submit" class="btn btn-default" id="search">Search</button>
             </div>
         </div>
     </div>
-    <div class="col-md-8 col-md-offset-2 " id="job-post-panel">
 
+
+
+
+
+    <div class="col-md-8 col-md-offset-2 ">
+
+        <label class="switch">
+      <input type="checkbox" checked>
+      <span class="slider round" onclick="toggleVis()"></span>
+     </label>
+        <div id="skill-chart" style="display:block;"></div>
+        <div id="job-post-panel">
+
+        </div>
         <!-- <div class="job-post-card card-1" >
             <h4><a href="#">Internship in IT</a></h4>
             <h5 class="text-muted">
@@ -97,9 +113,8 @@
 
         <!--  end of job posting panel -->
     </div>
-
-        <div id="skill-chart"></div>
-
+    <div id="snackbar"></div>
+    <img src="./img/cat.jpg" id="cat_img" style="width:200px;">
 
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
     <script>
@@ -119,7 +134,7 @@
     <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="main.js"></script>
     <script src="js/bootstrap.min.js"></script>

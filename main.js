@@ -1,9 +1,53 @@
-window.onload = function() {
+$(document).ready(function() {
     initApp();
     document.getElementById('search').addEventListener('click', clickSearch);
 
-};
+    // $( "#skill-chart" ).hide();
 
+    // clickSearch(true);
+    if (annyang) {
+        // Let's define a command.
+        var commands = {
+            'search *term in *loc area': function(term, loc) {
+                // alert(term);
+                showToast('On it, ' + term + ' near ' + loc + '...')
+                jobSearch(term, loc);
+            },
+            'show me a cat': function() {
+                $('#cat_img').animate({
+                    bottom: '0px'
+                });
+
+                // send cat back
+                setTimeout(function() {
+                    $('#cat_img').animate({
+                        bottom: '-500px'
+                    });
+                }, 4500);
+                console.log('cat appear!');
+            },
+
+        };
+
+        // Add our commands to annyang
+        annyang.addCommands(commands);
+
+        // Start listening.
+        annyang.start();
+    }
+
+    jobSearch('Data Engineer', 'Los Angeles');
+
+});
+
+function toggleVis() {
+    var x = document.getElementById("skill-chart");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
 
 
 // $( document ).ready(function() {
@@ -35,8 +79,6 @@ function a1() {
     if (user) {
         // User is signed in.
         document.getElementById("left2").href = "user.html";
-
-
     } else {
         // No user is signed in.
         document.getElementById("left2").href = "index.html";
@@ -62,8 +104,6 @@ function a2() {
     }
 
 };
-
-
 
 function parseSkills(skillData, jobCount) {
     var totalCount = 0;
@@ -100,9 +140,13 @@ function parseSkills(skillData, jobCount) {
 };
 
 
-function initSkillChart(skills, jobCount) {
+function initSkillChart(skills, jobCount, keyWord, location) {
     var parsedSkills = parseSkills(skills, jobCount);
     // console.log(parsedSkills);
+
+    if (location.length < 2) {
+        location = 'United States'
+    }
 
     // Create the chart
     Highcharts.chart('skill-chart', {
@@ -110,7 +154,7 @@ function initSkillChart(skills, jobCount) {
             type: 'column'
         },
         title: {
-            text: 'Most desired skills for Data Scientists in Los Angeles, California'
+            text: 'Most desired skills for ' + keyWord + ' in ' + location
         },
         subtitle: {
             text: 'Source: <a href="https://www.indeed.com/">Indeed.com</a>, scraped by Ji</a>.'
@@ -143,7 +187,7 @@ function initSkillChart(skills, jobCount) {
         },
 
         series: [{
-            name: 'Skills/Programming Language',
+            name: 'Skills',
             colorByPoint: true,
             data: parsedSkills
         }]
@@ -152,19 +196,30 @@ function initSkillChart(skills, jobCount) {
 }
 
 
+function showToast(text) {
+    // Get the snackbar DIV
+    var x = document.getElementById("snackbar");
+    x.innerHTML = text;
+    // Add the "show" class to DIV
+    x.className = "show";
 
-function clickSearch() {
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function() {
+        x.className = x.className.replace("show", "");
+    }, 1500);
+}
 
-    var searchKeywords = document.getElementById('searchKeywords').value;
-    var place = document.getElementById('place').value;
+
+function jobSearch(searchKeywords, place) {
+    console.log(searchKeywords, place);
 
     var $jobPanel = $('#job-post-panel');
     // empty job panel for new searchKeywords
     $jobPanel.empty();
 
     var jobTemplate = "" + '<div class="job-post-card card-1" >' +
-        '<h4><a href="{{url}}">{{jobtitle}}</a></h4> <h5 class="text-muted">' +
-        '<span class="company" style="color:gray;"><a href="#">{{company}}</a></span>' +
+        '<div class="job-title"><a href="{{url}}">{{jobtitle}}</a></div> <h5 class="text-muted">' +
+        '<span class="company" style="color:gray;"><a href="https://www.indeed.com/cmp/{{company}}">{{company}}</a></span>' +
         '<span class="location" style="margin-left:5px;"> - {{formattedLocationFull}}</span> </h5> ' +
         '<div class="job-snip">{{snippet}}</div> <div class="job-date" style="color:gray;"> {{formattedRelativeTime}} </div> </div>'
 
@@ -173,7 +228,7 @@ function clickSearch() {
     };
 
 
-    var url = "https://indeed-jz.herokuapp.com/indeed/" + encodeURI(searchKeywords);
+    var url = "https://indeed-jz.herokuapp.com/indeed/?term=" + encodeURI(searchKeywords) + "&loc=" + 　encodeURI(place);
     console.log(url);
     //  Pull data from our apiKey
     $.ajax({
@@ -197,7 +252,7 @@ function clickSearch() {
             console.log(skills);
 
             // init the skill chart
-            initSkillChart(skills, jobPosts.length);
+            initSkillChart(skills, jobPosts.length, searchKeywords, place);
 
         },
         fail: function() {
@@ -205,66 +260,33 @@ function clickSearch() {
         },
     });
     //  end of api call
+
     var user = firebase.auth().currentUser;
 
     if (user) {
         // User is signed in.
         var uid = user.uid;
-        var ref = firebase.database().ref('search' + uid);
-        if (searchKeywords !== null && searchKeywords !== ""){
-            ref.child("keyword").push({
-                searchKeywords: searchKeywords
-            });
-        }
-        if (place !== null || place !== ""){
-           place = "CA"
-            
-        }
-        ref.child("place").push({
+        firebase.database().ref('search' + uid).push({
+            searchKeywords: searchKeywords,
             place: place
         });
-        // firebase.database().ref('search' + uid).push({
-        //     searchKeywords: searchKeywords,
-        //     place: place
-        // });
 
     } else {
         // No user is signed in.
     }
-};
+}
 
-// function addSearchResult(place, keyWords) {
-//     // var params = {
-//     //     // Request parameters
-//     //     "term": keyWords,
-//     //     "loc": place,
-//     // };
-//
-//     $.ajax({
-//             url: "https://indeed-jz.herokuapp.com/indeed/",
-//             // url: "https://indeed-jz.herokuapp.com/indeed/" + $.param(params),
-//             type: "GET",
-//             data: keyWords,
-//         })
-//         .done(function(data) {
-//             // alert("success");
-//             // console.log(data);
-//             jobPosts = data["result"]["job_results"]
-//             skills = data["result"]["skills_required"]
-//
-//             console.log(jobPosts);
-//             console.log(skills);
-//
-//             return {
-//                 "jobPosts": jobPosts,
-//                 "skills": skills,
-//             };
-//         })
-//         .fail(function(jqXHR, textStatus, errorThrown) {
-//             // alert("error");
-//             alert(textStatus);
-//             alert(errorThrown);
-//             console.log('error');
-//             return 'failed';
-//         });
-// };
+
+
+function clickSearch() {
+    // if (firstLoad == true) {
+    //     var searchKeywords = 'Data Engineer';
+    //     var place = 'Los Angeles, CA';
+    // } else {
+    var searchKeywords = document.getElementById('searchKeywords').value;
+    var place = document.getElementById('place').value;
+
+    jobSearch(searchKeywords, location);
+
+
+};
